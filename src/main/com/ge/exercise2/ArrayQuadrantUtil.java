@@ -3,10 +3,10 @@ package com.ge.exercise2;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class ArrayQuadrantUtil {
+public class ArrayQuadrantUtil<T> {
     private static final Logger logger = LogManager.getLogger(ArrayQuadrantUtil.class);
 
-    private char[][] data;
+    private T[][] data;
     private int row;
     private int column;
 
@@ -15,7 +15,7 @@ public class ArrayQuadrantUtil {
      * Constructs the Util class to operate on the given data 
      * @param data to be operated on
      */
-    public ArrayQuadrantUtil(char[][] data) {
+    public ArrayQuadrantUtil(T[][] data) {
         this.data = data;
         if(data == null)
         	return;
@@ -28,15 +28,16 @@ public class ArrayQuadrantUtil {
      * @param r row from which data will be given
      * @return the value from the given row in an array
      */
-    public char[] getRowValues(int r) {
+    @SuppressWarnings("unchecked")
+	public T[] getRowValues(int r) {
     	if(data == null || r < 0 || r > this.row)
     		return null;
     	
-    	char temp[] = new char[this.column + 1];
+    	Object temp[] = new Object[this.column + 1];
     	for(int i = 0; i <= this.column ; i ++)
     		temp[i] = data[r][i];
     	
-    	return temp;
+    	return (T[]) temp;
     }
 
     /**
@@ -44,15 +45,16 @@ public class ArrayQuadrantUtil {
      * @param c column from which data will be given
      * @return the value from the given column in an array
      */
-    public char[] getColumnValues(int c) {
+    @SuppressWarnings("unchecked")
+	public T[] getColumnValues(int c) {
     	if(data == null || c < 0 || c > this.column)
     		return null;
     	
-    	char temp[] = new char[this.row + 1];
+    	Object temp[] = new Object[this.row + 1];
     	for(int i = 0; i <= this.row ; i ++)
     		temp[i] = data[i][c];
     	
-    	return temp;
+    	return (T []) temp;
     }
     
     /**
@@ -62,7 +64,8 @@ public class ArrayQuadrantUtil {
      * @param c column of the index
      * @return the value from the quadrant of the given index in an array
      */
-    public char[] getQuadrantValues(int r, int c) {
+    @SuppressWarnings("unchecked")
+	public T[] getQuadrantValues(int r, int c) {
     	if(data == null)
     		return null;
     	
@@ -72,7 +75,7 @@ public class ArrayQuadrantUtil {
     		return null;
     	int quadrantRow = ((row + 1) / 2);
     	int quadrantColumn = ((column + 1) / 2);
-    	char temp[] = new char[quadrantRow * quadrantColumn];
+    	Object temp[] = new Object[quadrantRow * quadrantColumn];
     	
     	int quadrantRowOffset = 0;
     	int quadrantColumnOffset = 0;
@@ -89,7 +92,7 @@ public class ArrayQuadrantUtil {
     		for(int j = 0; j < quadrantColumn; j++)
     			temp[i * quadrantRow + j] = data[quadrantRowOffset + i][quadrantColumnOffset + j];
     	
-        return temp;
+        return (T []) temp;
     }
 
     /**
