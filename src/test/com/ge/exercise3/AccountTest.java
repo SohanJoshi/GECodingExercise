@@ -12,8 +12,8 @@ public class AccountTest {
 
     @Before
     public void setUp() {
-        checkingAccount = new Account("001", "Checking");
-        savingsAccount = new Account("002", "Savings");
+        checkingAccount = new Account("001", AccountType.CHECKING);
+        savingsAccount = new Account("002", AccountType.SAVINGS);
     }
 
     @Test
@@ -27,10 +27,10 @@ public class AccountTest {
 
     @Test
     public void valueNextMonthTest() {
-        checkingAccount = new Account("003", "Checking", 100.0f);
+        checkingAccount = new Account("003", AccountType.CHECKING, 100.0f);
         assertEquals(100.0f, checkingAccount.valueNextMonth(), 0.01f);
 
-        savingsAccount = new Account("004", "Savings", 100.0f);
+        savingsAccount = new Account("004", AccountType.SAVINGS, 100.0f);
         assertEquals(101.0f, savingsAccount.valueNextMonth(), 0.01f);
 
         checkingAccount.setMonthlyFee(10.0f);
@@ -42,10 +42,10 @@ public class AccountTest {
 
     @Test
     public void toStringTest() {
-        savingsAccount = new Account("005", "Savings", 0.0f);
+        savingsAccount = new Account("005", AccountType.SAVINGS, 0.0f);
         assertEquals("No fee savings account #005", savingsAccount.toString());
 
-        checkingAccount = new Account("006", "Checking", 0.0f);
+        checkingAccount = new Account("006", AccountType.CHECKING, 0.0f);
         assertEquals("No fee checking account #006", checkingAccount.toString());
 
         checkingAccount.setMonthlyFee(10.0f);

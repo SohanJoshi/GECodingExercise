@@ -7,28 +7,28 @@ public class Account {
 
     private static final Logger logger = LogManager.getLogger(Account.class);
 
-    private static float monthlyInterestRate = 1.01f;
-    private static float monthlyFee = 0.0f;
+    private float monthlyInterestRate = 1.01f;
+    private float monthlyFee = 0.0f;
 
     private String accountNumber;
-    private String accountType;
+    private AccountType accountType;
     private float balance;
 
-    public Account(String accountNumber, String accountType, float balance) {
+    public Account(String accountNumber, AccountType accountType, float balance) {
         this.accountNumber = accountNumber;
         this.accountType = accountType;
         this.balance = balance;
-        if (accountType == "Checking") {
+        if (accountType == AccountType.CHECKING) {
             monthlyInterestRate = 1.0f;
         }
     }
 
-    public Account(String accountNumber, String accountType) {
+    public Account(String accountNumber, AccountType accountType) {
         new Account(accountNumber, accountType, 0.0f);
     }
 
     public Account(String accountNumber) {
-        new Account(accountNumber, "Savings", 0.0f);
+        new Account(accountNumber, AccountType.SAVINGS, 0.0f);
     }
 
     public float valueNextMonth() {
@@ -37,7 +37,7 @@ public class Account {
 
     @Override
     public String toString() {
-        if (accountType == "Checking") {
+        if (accountType == AccountType.CHECKING) {
             if (monthlyFee == 0.0f) {
                 return "No fee checking account #" + accountNumber;
             } else {
@@ -65,7 +65,12 @@ public class Account {
     }
 
     public void withdraw(float amount) {
-        balance -= amount;
+    	if(AccountType.SAVINGS.equals(accountType) && balance < amount)
+    		logger.info("Savings account #" + accountNumber + " don't have enough balance to complete the withdrawal");
+    	else if(AccountType.CHECKING.equals(accountType) && (balance + 100.0f) < amount)
+    		logger.info("Checking account #" + accountNumber + " will exceed overdraw limit. So aborting the withdrawal");
+    	else
+    		balance -= amount;
     }
 
     public float getMonthlyInterestRate() {
@@ -92,11 +97,11 @@ public class Account {
         this.accountNumber = accountNumber;
     }
 
-    public String getAccountType() {
+    public AccountType getAccountType() {
         return accountType;
     }
 
-    public void setAccountType(String accountType) {
+    public void setAccountType(AccountType accountType) {
         this.accountType = accountType;
     }
 

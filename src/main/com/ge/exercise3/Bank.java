@@ -34,4 +34,31 @@ public class Bank {
     public int numAccounts() {
         return accountMap.size();
     }
+    
+    /**
+     * The method returns sum of balances of all the accounts in the bank.
+     * @return
+     */
+    public double sumOfCurrentHoldings() {
+    	double sum = 0;
+    	
+    	for(Account account : accountMap.values())
+    		sum += account.getBalance();
+    	
+    	return sum;
+    }
+    
+    /**
+     * The method projects profit for the bank in the next month considering the current account holding.
+     * Note : If there is loss, the return value will be negative with loss amount as absolute value.
+     * @return The profit / loss (if amount is negative) amount.
+     */
+    public double projectNextMonthProfit() {
+    	double profitAmount = 0.0;
+    	
+    	for(Account account : accountMap.values())
+    		profitAmount += (account.valueNextMonth() - account.getBalance());
+    	
+    	return profitAmount;
+    }
 }
