@@ -80,4 +80,12 @@ public abstract class GEEngine {
 	public double getHoursBeforeRebuild() {
 		return this.flightHours - (this.numRebuilds * this.flightHoursBeforeRebuild);
 	}
+	
+	public double getRemainingServiceLife() {
+		double totalLife = this.maxNumRebuilds * this.flightHoursBeforeRebuild;
+		if(totalLife == 0.0)
+			return 0.0;
+		
+		return totalLife / flightHours;
+	}
 }
