@@ -31,22 +31,7 @@ public abstract class GEEngine {
 		this.wetWeight = wetWeight;
 		this.takeoffThrust = takeoffThrust;
 	}
-    
-	public GEEngine(String serialNumber, 
-			double flightHours, int maxNumRebuilds,
-			double flightHoursBeforeRebuild, double dryWeight, 
-			double wetWeight, double takeoffThrust) {
-		this(serialNumber, flightHours, 0,
-				maxNumRebuilds, flightHoursBeforeRebuild, 
-				dryWeight, wetWeight, takeoffThrust);
-	}
 
-    public GEEngine(String serialNumber, int maxNumRebuilds,
-			double flightHoursBeforeRebuild, double dryWeight, 
-			double wetWeight, double takeoffThrust) {
-        this(serialNumber, 0.0, maxNumRebuilds, flightHoursBeforeRebuild, 
-				dryWeight, wetWeight, takeoffThrust);
-    }
 
     public double getFlightHours() {
         return flightHours;
@@ -92,4 +77,7 @@ public abstract class GEEngine {
 		return takeoffThrust;
 	}
     
+	public double getHoursBeforeRebuild() {
+		return this.flightHours - (this.numRebuilds * this.flightHoursBeforeRebuild);
+	}
 }
