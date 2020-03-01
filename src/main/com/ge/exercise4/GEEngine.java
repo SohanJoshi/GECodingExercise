@@ -57,7 +57,7 @@ public abstract class GEEngine {
     }
 
     public double thrustToWeightRatio() {
-        return takeoffThrust / wetWeight;
+        return takeoffThrust / dryWeight;
     }
 
     public int getNumRebuilds() {
